@@ -11,18 +11,21 @@ public static class PetEndpoints
             1,
             "Bonbon",
             "Male",
+            "Dog",
             new DateOnly(2012, 7, 15)
         ),
         new (
             2,
             "Popi",
             "Female",
+            "Dog",
             new DateOnly(2012, 7, 15)
         ),
         new (
             3,
             "Konyong",
             "Female",
+            "Cat",
             new DateOnly(2012, 7, 15)
         ),
     ];
@@ -46,6 +49,7 @@ public static class PetEndpoints
                 pets.Count + 1,
                 newPet.Name,
                 newPet.Gender,
+                newPet.Species,
                 newPet.BirthDate
             );
 
@@ -66,6 +70,7 @@ public static class PetEndpoints
                 id,
                 updatedPet.Name,
                 updatedPet.Gender,
+                updatedPet.Species,
                 updatedPet.BirthDate
             );
 

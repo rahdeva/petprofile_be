@@ -13,6 +13,7 @@ Content-Type: application/json
 {
     "name": "Mantap",
     "gender": "Male",
+    "species": "Dog",
     "birthDate": "2011-11-12"
 }
 
@@ -23,6 +24,7 @@ Content-Type: application/json
 {
     "name": "Woi",
     "gender": "Female",
+    "species": "Cat",
     "birthDate": "2012-12-12"
 }
 
