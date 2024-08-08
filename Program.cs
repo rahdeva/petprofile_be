@@ -11,4 +11,6 @@ var app = builder.Build();
 app.MapGet("/", () => "PetProfile API");
 app.MapPetEndpoints();
 
+app.MigrateDb();
+
 app.Run();
