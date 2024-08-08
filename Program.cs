@@ -31,7 +31,11 @@ app.MapGet("/", () => "PetProfile API");
 
 app.MapGet("/api/pet", () => pets);
 
-app.MapGet("/api/pet/{id}", (int id) => pets.Find(game => game.Id == id))
+app.MapGet("/api/pet/{id}", (int id) => {
+    PetDto? pet = pets.Find(game => game.Id == id);
+
+    return pet is null ? Results.NotFound() : Results.Ok(pet);
+})
     .WithName(GetPetEndpointName);
 
 app.MapPost("/api/pet", (CreatePetDto newPet) => {
@@ -49,6 +53,10 @@ app.MapPost("/api/pet", (CreatePetDto newPet) => {
 
 app.MapPut("/api/pet/{id}", (int id, UpdatePetDto updatedPet) => {
     var index = pets.FindIndex(pet => pet.Id == id);
+
+    if(index == -1){
+        return Results.NotFound();
+    }
 
     pets[index] = new(
         id,
