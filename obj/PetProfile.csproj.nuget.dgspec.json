@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Code\\Projects\\petprofile_be\\PetProfile.csproj": {}
+    "D:\\Code\\Projects\\petprofile_be\\PetProfile.csproj": {}
   },
   "projects": {
-    "d:\\Code\\Projects\\petprofile_be\\PetProfile.csproj": {
+    "D:\\Code\\Projects\\petprofile_be\\PetProfile.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Code\\Projects\\petprofile_be\\PetProfile.csproj",
+        "projectUniqueName": "D:\\Code\\Projects\\petprofile_be\\PetProfile.csproj",
         "projectName": "PetProfile",
-        "projectPath": "d:\\Code\\Projects\\petprofile_be\\PetProfile.csproj",
+        "projectPath": "D:\\Code\\Projects\\petprofile_be\\PetProfile.csproj",
         "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "d:\\Code\\Projects\\petprofile_be\\obj\\",
+        "outputPath": "D:\\Code\\Projects\\petprofile_be\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config"

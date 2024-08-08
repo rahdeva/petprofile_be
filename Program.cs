@@ -4,7 +4,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 
-List<PetDto> petDtos = [
+const string GetPetEndpointName = "GetPet";
+
+List<PetDto> pets = [
     new (
         1,
         "Bonbon",
@@ -25,10 +27,37 @@ List<PetDto> petDtos = [
     ),
 ];
 
-app.MapGet("/", () => "Hello Deva!");
+app.MapGet("/", () => "PetProfile API");
 
-app.MapGet("/api/pet", () => petDtos);
+app.MapGet("/api/pet", () => pets);
 
-app.MapGet("/api/pet/{id}", (int id) => petDtos.Find(game => game.Id == id));
+app.MapGet("/api/pet/{id}", (int id) => pets.Find(game => game.Id == id))
+    .WithName(GetPetEndpointName);
+
+app.MapPost("/api/pet", (CreatePetDto newPet) => {
+    PetDto pet = new(
+        pets.Count + 1,
+        newPet.Name,
+        newPet.Gender,
+        newPet.BirthDate
+    );
+
+    pets.Add(pet);
+
+    return Results.CreatedAtRoute(GetPetEndpointName, new { id = pet.Id}, pet);
+});
+
+app.MapPut("/api/pet/{id}", (int id, UpdatePetDto updatedPet) => {
+    var index = pets.FindIndex(pet => pet.Id == id);
+
+    pets[index] = new(
+        id,
+        updatedPet.Name,
+        updatedPet.Gender,
+        updatedPet.BirthDate
+    );
+
+    return Results.NoContent();
+});
 
 app.Run();

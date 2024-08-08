@@ -5,3 +5,23 @@ GET http://localhost:5292/api/pet
 
 ###
 GET http://localhost:5292/api/pet/1
+
+###
+POST http://localhost:5292/api/pet
+Content-Type: application/json
+
+{
+    "name": "Mantap",
+    "gender": "Male",
+    "birthDate": "2011-11-12"
+}
+
+###
+PUT http://localhost:5292/api/pet/1
+Content-Type: application/json
+
+{
+    "name": "Woi",
+    "gender": "Female",
+    "birthDate": "2012-12-12"
+}
