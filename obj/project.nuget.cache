@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "4qUePXcTubI=",
+  "dgSpecHash": "HHh2iFpzuXg=",
   "success": true,
   "projectFilePath": "D:\\Code\\Projects\\petprofile_be\\PetProfile.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\LENOVO\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\LENOVO\\.nuget\\packages\\minimalapis.extensions\\0.11.0\\minimalapis.extensions.0.11.0.nupkg.sha512",
+    "C:\\Users\\LENOVO\\.nuget\\packages\\minivalidation\\0.8.0\\minivalidation.0.8.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -24,3 +24,9 @@ D:\Code\Projects\petprofile_be\obj\Debug\net8.0\PetProfile.pdb
 D:\Code\Projects\petprofile_be\obj\Debug\net8.0\PetProfile.genruntimeconfig.cache
 D:\Code\Projects\petprofile_be\obj\Debug\net8.0\ref\PetProfile.dll
 d:\Code\Projects\petprofile_be\obj\Debug\net8.0\PetProfile.sourcelink.json
+D:\Code\Projects\petprofile_be\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\Code\Projects\petprofile_be\bin\Debug\net8.0\MinimalApis.Extensions.dll
+D:\Code\Projects\petprofile_be\bin\Debug\net8.0\MiniValidation.dll
+D:\Code\Projects\petprofile_be\obj\Debug\net8.0\PetProfile.csproj.AssemblyReference.cache
+D:\Code\Projects\petprofile_be\obj\Debug\net8.0\PetProfile.MvcApplicationPartsAssemblyInfo.cs
+D:\Code\Projects\petprofile_be\obj\Debug\net8.0\PetProfile.csproj.Up2Date

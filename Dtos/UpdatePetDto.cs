@@ -1,10 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PetProfile.Dtos;
 
 public record class UpdatePetDto(
-    string Name, 
-    string Gender,
-    DateOnly BirthDate
-)
-{
-
-}
+    [Required][StringLength(50)] string Name, 
+    [Required][StringLength(20)] string Gender,
+    [Required] DateOnly BirthDate
+);

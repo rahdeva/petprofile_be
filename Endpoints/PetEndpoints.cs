@@ -27,19 +27,21 @@ public static class PetEndpoints
         ),
     ];
 
+
     public static WebApplication MapPetEndpoints(this WebApplication app){
-        app.MapGet("/", () => "PetProfile API");
+        var petGroup = app.MapGroup("/api/pet")
+            .WithParameterValidation();     
 
-        app.MapGet("/api/pet", () => pets);
+        petGroup.MapGet("/", () => pets);
 
-        app.MapGet("/api/pet/{id}", (int id) => {
+        petGroup.MapGet("/{id}", (int id) => {
             PetDto? pet = pets.Find(game => game.Id == id);
 
             return pet is null ? Results.NotFound() : Results.Ok(pet);
         })
             .WithName(GetPetEndpointName);
 
-        app.MapPost("/api/pet", (CreatePetDto newPet) => {
+        petGroup.MapPost("", (CreatePetDto newPet) => {
             PetDto pet = new(
                 pets.Count + 1,
                 newPet.Name,
@@ -50,9 +52,10 @@ public static class PetEndpoints
             pets.Add(pet);
 
             return Results.CreatedAtRoute(GetPetEndpointName, new { id = pet.Id}, pet);
-        });
+        })
+        .WithParameterValidation();
 
-        app.MapPut("/api/pet/{id}", (int id, UpdatePetDto updatedPet) => {
+        petGroup.MapPut("/{id}", (int id, UpdatePetDto updatedPet) => {
             var index = pets.FindIndex(pet => pet.Id == id);
 
             if(index == -1){
@@ -69,7 +72,7 @@ public static class PetEndpoints
             return Results.NoContent();
         });
 
-        app.MapDelete("/api/pet/{id}", (int id) => {
+        petGroup.MapDelete("/{id}", (int id) => {
             pets.RemoveAll(game => game.Id == id);
             
             return Results.NoContent();

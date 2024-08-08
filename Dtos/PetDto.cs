@@ -5,6 +5,4 @@ public record class PetDto(
     string Name, 
     string Gender,
     DateOnly BirthDate
-){
-
-}
+);
