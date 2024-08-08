@@ -1,1 +1,7 @@
 GET http://localhost:5292/
+
+###
+GET http://localhost:5292/api/pet
+
+###
+GET http://localhost:5292/api/pet/1
