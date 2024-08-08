@@ -60,4 +60,10 @@ app.MapPut("/api/pet/{id}", (int id, UpdatePetDto updatedPet) => {
     return Results.NoContent();
 });
 
+app.MapDelete("/api/pet/{id}", (int id) => {
+    pets.RemoveAll(game => game.Id == id);
+    
+    return Results.NoContent();
+});
+
 app.Run();
