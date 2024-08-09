@@ -1,9 +1,9 @@
 namespace PetProfile.Dtos;
 
-public record class PetDto(
+public record class PetSummaryDto(
     int Id, 
     string Name, 
-    string Species,
     string Gender,
+    string Species,
     DateOnly BirthDate
 );

@@ -8,4 +8,15 @@ public class PetProfileContext(DbContextOptions<PetProfileContext> options) : Db
 {
     public DbSet<Pet> Pet => Set<Pet>();
     public DbSet<Species> Species => Set<Species>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Species>().HasData(
+            new {Id = 1, Name = "Dog"},
+            new {Id = 2, Name = "Cat"},
+            new {Id = 3, Name = "Bird"},
+            new {Id = 4, Name = "Hamster"},
+            new {Id = 5, Name = "Snake"}
+        );
+    }
 }

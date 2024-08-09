@@ -1,4 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using PetProfile.Data;
 using PetProfile.Dtos;
+using PetProfile.Entities;
+using PetProfile.Mapping;
 
 namespace PetProfile.Endpoints;
 
@@ -6,79 +10,61 @@ public static class PetEndpoints
 {
     const string GetPetEndpointName = "GetPet";
 
-    private static readonly List<PetDto> pets = [
-        new (
-            1,
-            "Bonbon",
-            "Male",
-            "Dog",
-            new DateOnly(2012, 7, 15)
-        ),
-        new (
-            2,
-            "Popi",
-            "Female",
-            "Dog",
-            new DateOnly(2012, 7, 15)
-        ),
-        new (
-            3,
-            "Konyong",
-            "Female",
-            "Cat",
-            new DateOnly(2012, 7, 15)
-        ),
-    ];
-
-
     public static WebApplication MapPetEndpoints(this WebApplication app){
         var petGroup = app.MapGroup("/api/pet")
             .WithParameterValidation();     
 
-        petGroup.MapGet("/", () => pets);
+        petGroup.MapGet("/", (PetProfileContext dbContext) => 
+            dbContext.Pet
+                .Include(pet => pet.Species)
+                .Select(pet => pet.ToPetSummaryDto())
+                .AsNoTracking()
+        );
 
-        petGroup.MapGet("/{id}", (int id) => {
-            PetDto? pet = pets.Find(game => game.Id == id);
+        petGroup.MapGet("/{id}", (int id, PetProfileContext dbContext) => {
+            Pet? pet = dbContext.Pet.Find(id);
 
-            return pet is null ? Results.NotFound() : Results.Ok(pet);
+            return pet is null 
+                ? Results.NotFound() 
+                : Results.Ok(pet.ToPetDetailDto());
         })
-            .WithName(GetPetEndpointName);
+        .WithName(GetPetEndpointName);
 
-        petGroup.MapPost("", (CreatePetDto newPet) => {
-            PetDto pet = new(
-                pets.Count + 1,
-                newPet.Name,
-                newPet.Gender,
-                newPet.Species,
-                newPet.BirthDate
+        petGroup.MapPost("", (CreatePetDto newPet, PetProfileContext dbContext) => {
+            Pet pet = newPet.ToEntity();
+
+            dbContext.Pet.Add(pet);
+            dbContext.SaveChanges();
+
+            return Results.CreatedAtRoute(
+                GetPetEndpointName, 
+                new { id = pet.Id}, 
+                pet.ToPetDetailDto()
             );
+        });
 
-            pets.Add(pet);
+        petGroup.MapPut("/{id}", (int id, UpdatePetDto updatedPet, PetProfileContext dbContext) => {
+            var existingPet = dbContext.Pet.Find(id);
 
-            return Results.CreatedAtRoute(GetPetEndpointName, new { id = pet.Id}, pet);
-        })
-        .WithParameterValidation();
-
-        petGroup.MapPut("/{id}", (int id, UpdatePetDto updatedPet) => {
-            var index = pets.FindIndex(pet => pet.Id == id);
-
-            if(index == -1){
+            if(existingPet is null){
                 return Results.NotFound();
             }
 
-            pets[index] = new(
-                id,
-                updatedPet.Name,
-                updatedPet.Gender,
-                updatedPet.Species,
-                updatedPet.BirthDate
-            );
+            dbContext.Entry(existingPet)
+                .CurrentValues
+                .SetValues(updatedPet.ToEntity(id));
+            
+            dbContext.SaveChanges();
 
             return Results.NoContent();
         });
 
-        petGroup.MapDelete("/{id}", (int id) => {
-            pets.RemoveAll(game => game.Id == id);
+        petGroup.MapDelete("/{id}", (int id, PetProfileContext dbContext) => {
+            dbContext.Pet
+                .Where(pet => pet.Id == id)
+                .ExecuteDelete();
+
+            dbContext.SaveChanges();
             
             return Results.NoContent();
         });

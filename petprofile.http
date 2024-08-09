@@ -4,29 +4,29 @@ GET http://localhost:5292/
 GET http://localhost:5292/api/pet
 
 ###
-GET http://localhost:5292/api/pet/5
+GET http://localhost:5292/api/pet/1
 
 ###
 POST http://localhost:5292/api/pet
 Content-Type: application/json
 
 {
-    "name": "Mantap",
-    "gender": "Male",
-    "species": "Dog",
-    "birthDate": "2011-11-12"
+    "name": "Popi",
+    "gender": "Female",
+    "speciesId": 2,
+    "birthDate": "2016-11-12"
 }
 
 ###
-PUT http://localhost:5292/api/pet/5
+PUT http://localhost:5292/api/pet/1
 Content-Type: application/json
 
 {
     "name": "Woi",
     "gender": "Female",
-    "species": "Cat",
+    "speciesId": 3,
     "birthDate": "2012-12-12"
 }
 
 ###
-DELETE http://localhost:5292/api/pet/1
+DELETE http://localhost:5292/api/pet/4
