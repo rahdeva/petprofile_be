@@ -14,15 +14,17 @@ public static class PetEndpoints
         var petGroup = app.MapGroup("/api/pet")
             .WithParameterValidation();     
 
-        petGroup.MapGet("/", (PetProfileContext dbContext) => 
-            dbContext.Pet
+        petGroup.MapGet("/", async (PetProfileContext dbContext) => 
+            await dbContext.Pet
                 .Include(pet => pet.Species)
                 .Select(pet => pet.ToPetSummaryDto())
                 .AsNoTracking()
+                .ToListAsync()
         );
 
-        petGroup.MapGet("/{id}", (int id, PetProfileContext dbContext) => {
-            Pet? pet = dbContext.Pet.Find(id);
+        petGroup.MapGet("/{id}", async (int id, PetProfileContext dbContext) => {
+            Pet? pet = await dbContext.Pet
+                .FindAsync(id);
 
             return pet is null 
                 ? Results.NotFound() 
@@ -30,11 +32,11 @@ public static class PetEndpoints
         })
         .WithName(GetPetEndpointName);
 
-        petGroup.MapPost("", (CreatePetDto newPet, PetProfileContext dbContext) => {
+        petGroup.MapPost("", async (CreatePetDto newPet, PetProfileContext dbContext) => {
             Pet pet = newPet.ToEntity();
 
             dbContext.Pet.Add(pet);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             return Results.CreatedAtRoute(
                 GetPetEndpointName, 
@@ -43,8 +45,8 @@ public static class PetEndpoints
             );
         });
 
-        petGroup.MapPut("/{id}", (int id, UpdatePetDto updatedPet, PetProfileContext dbContext) => {
-            var existingPet = dbContext.Pet.Find(id);
+        petGroup.MapPut("/{id}", async (int id, UpdatePetDto updatedPet, PetProfileContext dbContext) => {
+            var existingPet = await dbContext.Pet.FindAsync(id);
 
             if(existingPet is null){
                 return Results.NotFound();
@@ -54,18 +56,16 @@ public static class PetEndpoints
                 .CurrentValues
                 .SetValues(updatedPet.ToEntity(id));
             
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             return Results.NoContent();
         });
 
-        petGroup.MapDelete("/{id}", (int id, PetProfileContext dbContext) => {
-            dbContext.Pet
+        petGroup.MapDelete("/{id}", async (int id, PetProfileContext dbContext) => {
+            await dbContext.Pet
                 .Where(pet => pet.Id == id)
-                .ExecuteDelete();
+                .ExecuteDeleteAsync();
 
-            dbContext.SaveChanges();
-            
             return Results.NoContent();
         });
 

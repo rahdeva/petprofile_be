@@ -11,9 +11,9 @@ POST http://localhost:5292/api/pet
 Content-Type: application/json
 
 {
-    "name": "Popi",
-    "gender": "Female",
-    "speciesId": 2,
+    "name": "Bonbon",
+    "gender": "Male",
+    "speciesId": 1,
     "birthDate": "2016-11-12"
 }
 
@@ -30,3 +30,6 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:5292/api/pet/4
+
+###
+GET http://localhost:5292/api/species
