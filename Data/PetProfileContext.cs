@@ -9,6 +9,8 @@ public class PetProfileContext(DbContextOptions<PetProfileContext> options) : Db
     public DbSet<Pet> Pet => Set<Pet>();
     public DbSet<Species> Species => Set<Species>();
 
+    public DbSet<Image> Images { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Species>().HasData(

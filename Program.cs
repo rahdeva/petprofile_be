@@ -11,6 +11,7 @@ var app = builder.Build();
 app.MapGet("/", () => "PetProfile API");
 app.MapPetEndpoints();
 app.MapSpeciesEndpoints();
+app.MapImageEndpoints();
 
 await app.MigrateDbAsync();
 

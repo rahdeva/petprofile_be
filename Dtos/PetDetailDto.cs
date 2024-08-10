@@ -1,9 +1,16 @@
 namespace PetProfile.Dtos;
 
 public record class PetDetailDto(
-    int Id, 
+    int Id,
     string Name,
+    string Nickname,
     string Gender,
     int SpeciesId,
-    DateOnly BirthDate
+    string SpeciesName,
+    string Breed,
+    DateOnly BirthDate,
+    float Weight,
+    string Color,
+    string ImageName,
+    string ImagePath
 );

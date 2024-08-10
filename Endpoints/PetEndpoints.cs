@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PetProfile.Data;
 using PetProfile.Dtos;
@@ -33,14 +34,14 @@ public static class PetEndpoints
         .WithName(GetPetEndpointName);
 
         petGroup.MapPost("", async (CreatePetDto newPet, PetProfileContext dbContext) => {
-            Pet pet = newPet.ToEntity();
+            var pet = newPet.ToEntity();
 
             dbContext.Pet.Add(pet);
             await dbContext.SaveChangesAsync();
 
             return Results.CreatedAtRoute(
-                GetPetEndpointName, 
-                new { id = pet.Id}, 
+                GetPetEndpointName,
+                new { id = pet.Id },
                 pet.ToPetDetailDto()
             );
         });
@@ -62,6 +63,13 @@ public static class PetEndpoints
         });
 
         petGroup.MapDelete("/{id}", async (int id, PetProfileContext dbContext) => {
+            var pet = await dbContext.Pet.FindAsync(id);
+
+            if (pet is null)
+            {
+                return Results.NotFound();
+            }
+
             await dbContext.Pet
                 .Where(pet => pet.Id == id)
                 .ExecuteDeleteAsync();

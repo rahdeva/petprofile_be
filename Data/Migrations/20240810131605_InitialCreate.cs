@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace PetProfile.Data.Migrations
 {
     /// <inheritdoc />
@@ -11,6 +13,20 @@ namespace PetProfile.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FileName = table.Column<string>(type: "TEXT", nullable: false),
+                    FilePath = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Species",
                 columns: table => new
@@ -31,9 +47,16 @@ namespace PetProfile.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Nickname = table.Column<string>(type: "TEXT", nullable: false),
                     SpeciesId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SpeciesName = table.Column<string>(type: "TEXT", nullable: false),
+                    Breed = table.Column<string>(type: "TEXT", nullable: false),
                     Gender = table.Column<string>(type: "TEXT", nullable: false),
-                    BirthDate = table.Column<DateOnly>(type: "TEXT", nullable: false)
+                    BirthDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    Weight = table.Column<float>(type: "REAL", nullable: false),
+                    Color = table.Column<string>(type: "TEXT", nullable: false),
+                    ImageName = table.Column<string>(type: "TEXT", nullable: false),
+                    ImagePath = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,6 +69,18 @@ namespace PetProfile.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Species",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Dog" },
+                    { 2, "Cat" },
+                    { 3, "Bird" },
+                    { 4, "Hamster" },
+                    { 5, "Snake" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Pet_SpeciesId",
                 table: "Pet",
@@ -55,6 +90,9 @@ namespace PetProfile.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Images");
+
             migrationBuilder.DropTable(
                 name: "Pet");
 

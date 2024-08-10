@@ -11,14 +11,33 @@ using PetProfile.Data;
 namespace PetProfile.Data.Migrations
 {
     [DbContext(typeof(PetProfileContext))]
-    [Migration("20240808202346_SeedSpecies")]
-    partial class SeedSpecies
+    [Migration("20240810131614_SeedingSpecies")]
+    partial class SeedingSpecies
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
+
+            modelBuilder.Entity("PetProfile.Entities.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
 
             modelBuilder.Entity("PetProfile.Entities.Pet", b =>
                 {
@@ -29,7 +48,23 @@ namespace PetProfile.Data.Migrations
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Breed")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -37,8 +72,19 @@ namespace PetProfile.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Nickname")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("SpeciesId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("SpeciesName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 

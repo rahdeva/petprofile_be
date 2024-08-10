@@ -12,9 +12,16 @@ Content-Type: application/json
 
 {
     "name": "Bonbon",
+    "nickname": "Bonny",
     "gender": "Male",
     "speciesId": 1,
-    "birthDate": "2016-11-12"
+    "speciesName": "Dog",
+    "birthDate": "2016-11-12",
+    "breed": "Labrador",
+    "weight": 25,
+    "color": "Yellow",
+    "imageName": "bonbon.jpg",
+    "imagePath": "wwwroot/images/bonbon.jpg"
 }
 
 ###
@@ -22,14 +29,22 @@ PUT http://localhost:5292/api/pet/1
 Content-Type: application/json
 
 {
+    "id": 2,
     "name": "Woi",
+    "nickname": "Woiie",
     "gender": "Female",
-    "speciesId": 3,
-    "birthDate": "2012-12-12"
+    "speciesId": 2,
+    "speciesName": "Cat",
+    "birthDate": "2012-12-12",
+    "breed": "Beagle",
+    "weight": 20,
+    "color": "Brown",
+    "imageName": "woi.jpg",
+    "imagePath": "wwwroot/images/woi.jpg"
 }
 
 ###
-DELETE http://localhost:5292/api/pet/4
+DELETE http://localhost:5292/api/pet/3
 
 ###
 GET http://localhost:5292/api/species
